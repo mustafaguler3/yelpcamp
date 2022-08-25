@@ -1,0 +1,56 @@
+<%- layout("./layouts/boilerplate") %>
+
+<div class="row">
+    <h1 class="text-center">Edit Campground</h1>
+    <div class="col-6 offset-3">
+        <form action="/campgrounds" method="post" novalidate class="validated-form">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input class="form-control" type="text" id="title" name="campground[title]" value="<%=campground.title%>" required>
+                <div class="valid-feedback">
+                    looks good
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input class="form-control" type="text" id="location" name="campground[location]" value="<%=campground.location%>" required>
+                <div class="valid-feedback">
+                    looks good
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Image Url</label>
+                <input class="form-control" type="text" id="image" name="campground[image]" value="<%=campground.image%>" required>
+                <div class="valid-feedback">
+                    looks good
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Campground Price</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">$</span>
+                    <input type="text" class="form-control" id="price" placeholder="0" aria-describedby="basic-addon1" value="<%=campground.price%>" required>
+                    <div class="valid-feedback">
+                        looks good
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input class="form-control" type="text" id="description" name="campground[description]" value="<%=campground.description%>" required>
+                <div class="valid-feedback">
+                    looks good
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-info">Update Campground</button>
+            </div>
+        </form>
+        <a href="/campgrounds">All Campgrounds</a>
+    </div>
+ </div>
