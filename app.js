@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !== "production"){
+    require("dotenv").config()
+}
+
 const express = require("express")
 const app = express();
 const path = require("path")
@@ -13,10 +17,11 @@ const reviewSchema = require("./schemas")
 const userRoutes = require("./routes/users")
 const reviewRoutes = require("./routes/reviews")
 const campgroundRouter = require("./routes/campgrounds");
-
+const session = require("express-session")
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const flash = require("connect-flash")
 
 mongoose.connect("mongodb://localhost:27017/yelp-camp",
 {
@@ -24,13 +29,24 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp",
     useUnifiedTopology: true
 })
 const db = mongoose.connection;
-db.on("error",console.error.bind(console,"connection error:"))
+db.on("error",console.error.bind("connection error:"))
 db.once("open",()=>{
     console.log("database connected")
 })
 
+
+app.set("view engine","ejs")
+app.set("views",path.join(__dirname,"views"))
+app.engine("ejs",ejsMate)
+
+app.use("/review",reviewRoutes)
+app.use("/users",userRoutes)
+app.use("/campgrounds",campgroundRouter);
+
+
+app.use(express.urlencoded({extended:true}))
 app.use(methodOverride("_method"))
-app.use(express.static("public"))
+app.use(express.static(path.join(__dirname,"public")))
 
 const sessionConfig ={
     secret: "thisismysecret",
@@ -65,15 +81,7 @@ app.get("/fakeUser",async(req,res) => {
     res.send(newUser)
 })
 
-app.use("/review",reviewRoutes)
-app.use("/users",userRoutes)
-app.use("/campgrounds",campgroundRouter);
 
-app.set("view engine","ejs")
-app.set("views",path.join(__dirname,"views"))
-app.engine("ejs",ejsMate)
-
-app.use(express.urlencoded({extended:true}))
 
 app.get("/", (req,res) => {
     res.render("home")

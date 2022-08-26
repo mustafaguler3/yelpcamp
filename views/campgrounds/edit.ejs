@@ -20,12 +20,12 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label for="image" class="form-label">Image Url</label>
-                <input class="form-control" type="text" id="image" name="campground[image]" value="<%=campground.image%>" required>
-                <div class="valid-feedback">
-                    looks good
-                </div>
+            <div class="form-file">
+                <input type="file" class="form-file-input" id="image" name="image" multiple>
+                <label class="form-file-label" for="image">
+                    <span class="form-file-text">Choose images...</span>
+                    <span class="form-file-button">Browse</span>
+                </label>
             </div>
 
             <div class="mb-3">
@@ -45,6 +45,14 @@
                 <div class="valid-feedback">
                     looks good
                 </div>
+            </div>
+            <div class="mb-3">
+                <% campground.images.forEach(function(img,i) { %>
+                    <img src="<%= img.url%>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename%>">
+                    </div>
+                <%})%>
             </div>
 
             <div class="mb-3">
