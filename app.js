@@ -11,6 +11,7 @@ const Review = require("./models/review")
 const reviewSchema = require("./schemas")
 
 const userRoutes = require("./routes/users")
+const reviewRoutes = require("./routes/reviews")
 const campgroundRouter = require("./routes/campgrounds");
 
 const passport = require("passport");
@@ -64,6 +65,7 @@ app.get("/fakeUser",async(req,res) => {
     res.send(newUser)
 })
 
+app.use("/review",reviewRoutes)
 app.use("/users",userRoutes)
 app.use("/campgrounds",campgroundRouter);
 
